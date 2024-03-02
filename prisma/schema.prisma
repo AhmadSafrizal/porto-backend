@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  username      String
+  name          String
+  password      String
+  description   String
+  profile       String
+  photo         String
+}
+
+model skills {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  category_id   String
+  level_id      String 
+
+  category_skill category_skill @relation(fields: [category_id], references: [id])
+  level_skill level_skill @relation(fields: [level_id], references: [id])
+}
+
+model category_skill {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+
+  skills skills[]
+}
+
+model level_skill {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+
+  skills skills[]
+}
+
+model projects {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  category_id   String
+  description   String
+  github        String
+  link          String
+  photo         String
+
+  category_project category_project @relation(fields: [category_id], references: [id])
+}
+
+model category_project {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+
+  projects projects[]
+}
+
+model socials {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  link          String
+  icon          String
+}
+
+model contacts {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  link          String
+  icon          String
+}
+
+model blogs {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  description   String
+  date_activity String
+}
+
+model cv {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  link          String
+}
