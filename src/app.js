@@ -5,19 +5,29 @@ const dotenv = require("dotenv");
 const { main, disconnectPrisma } = require('./lib/prismaOperation');
 const routes = require("./api/routes");
 
+dotenv.config();
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const corsConfig = {
+  origin: "*",
+  Credential: true,
+  method: [
+    "GET", "POST", "PUT", "DELETE"
+  ]
+}
+
+app.use(cors(corsConfig));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(routes);
 
-const swaggerUiOptions = {
-  explorer: true,
-};
+// const swaggerUiOptions = {
+//   explorer: true,
+// };
 
 // app.use(
 //   "/api-docs",
