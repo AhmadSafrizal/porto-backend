@@ -26,16 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(routes);
 
-// const swaggerUiOptions = {
-//   explorer: true,
-// };
-
-// app.use(
-//   "/api-docs",
-//   swaggerUI.serve,
-//   swaggerUI.setup(swaggerDocs, swaggerUiOptions)
-// );
-
 app.listen(PORT, async () => {
   console.log(`Example app listening on port ${PORT}`);
 
