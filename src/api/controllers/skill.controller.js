@@ -4,7 +4,10 @@ const skillServices = require("../services/skill.service");
 
 const getAllSkill = async (req, res) => {
     try {
-        const skills = await skillServices.findAllSkills();
+
+        const category = req.query.category;
+
+        const skills = await skillServices.findAllSkills(category);
 
         if (skills.length === 0) {
             throw new CustomAPIError(`No Skill was found`, 404);

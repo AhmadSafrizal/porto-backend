@@ -39,13 +39,14 @@ const findContact = async (params) => {
 
 const addContact = async (body) => {
     try {
-        const { name, link, icon } = body;
+        const { name, link, icon, value } = body;
 
         const contact = await prisma.contacts.create({
             data: {
                 name,
                 link,
                 icon,
+                value,
             },
         });
         return contact;

@@ -1,20 +1,40 @@
 const prisma = require("../../lib/prisma");
 const CustomAPIError = require("../middlewares/custom-error");
 
-const findAllSkills = async () => {
+const findAllSkills = async (category) => {
     try {
+
+        if (category == null || category == "") {
+            const skills = await prisma.skills.findMany({
+                include: {
+                    category_skill: true,
+                    level_skill: true
+                }
+            });
+
+            if(!skills) {
+                throw new CustomAPIError(`No skills yet`, 400);
+            }
+    
+            return skills;
+        }
+
         const skills = await prisma.skills.findMany({
+            where: {
+                category_id: category,
+            },
             include: {
                 category_skill: true,
                 level_skill: true
             }
         });
 
-        if(!skills) {
-            throw new CustomAPIError(`No skills yet`, 400);
+        if (!skills) {
+            throw new CustomAPIError(`No skills for the given category`, 404);
         }
 
         return skills;
+
     } catch (error) {
         console.log(error);
         throw new CustomAPIError(`${error.message}`, 500);

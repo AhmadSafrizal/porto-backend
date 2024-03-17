@@ -4,7 +4,10 @@ const projectServices = require("../services/project.service");
 
 const getAllProjects = async (req, res) => {
     try {
-        const project = await projectServices.findAllProjects();
+
+        const category = req.query.category;
+
+        const project = await projectServices.findAllProjects(category);
 
         if (project.length === 0) {
             throw new CustomAPIError(`No Project was found`, 404);
@@ -91,7 +94,7 @@ const uploadFileAndEditProject = async (req, res) => {
     try {
         const fileUrl = await projectServices.uploadToCloudinary(req.file.buffer);
         const { id } = req.params;
-        await projectServices.editUserAfterUpload(id, fileUrl);
+        await projectServices.editProjectAfterUpload(id, fileUrl);
         res.status(200).json({ 
             success: true, 
             message: 'File uploaded and project data updated successfully' 

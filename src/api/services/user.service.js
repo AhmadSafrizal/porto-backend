@@ -12,7 +12,7 @@ const findUser = async (id) => {
     
         const user = await prisma.users.findFirst({
             where: {
-                id
+                id: String(id)
             }
         });
     

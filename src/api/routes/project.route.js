@@ -5,8 +5,8 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 const router = require("express").Router();
-router.get("/",  verifyTokenUser, controllers.getAllProjects);
-router.get("/:id",  verifyTokenUser, controllers.getProject);
+router.get("/",  controllers.getAllProjects);
+router.get("/:id",  controllers.getProject);
 router.post('/:id/upload', verifyTokenUser, upload.single('file'), controllers.uploadFileAndEditProject);
 router.post("/", verifyTokenUser, controllers.createProject);
 router.put("/:id",  verifyTokenUser, controllers.updateProject);

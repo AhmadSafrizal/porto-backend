@@ -76,6 +76,7 @@ model socials {
 model contacts {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   name          String
+  value         String
   link          String
   icon          String
 }

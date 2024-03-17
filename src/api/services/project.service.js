@@ -3,9 +3,26 @@ const CustomAPIError = require("../middlewares/custom-error");
 const cloudinary = require('../../lib/cloudinary');
 const crypto = require('crypto');
 
-const findAllProjects = async () => {
+const findAllProjects = async (category) => {
     try {
+        if (category == null || category == "") {
+            const project = await prisma.projects.findMany({
+                include: {
+                    category_project: true,
+                }
+            });
+    
+            if(!project) {
+                throw new CustomAPIError(`No projects yet`, 400);
+            }
+    
+            return project;
+        }
+
         const project = await prisma.projects.findMany({
+            where: {
+                category_id: category,
+            },
             include: {
                 category_project: true,
             }
