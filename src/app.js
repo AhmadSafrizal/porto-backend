@@ -15,10 +15,11 @@ const corsConfig = {
   origin: "*",
   Credential: true,
   method: [
-    "GET", "POST", "PUT", "DELETE"
+    "GET", "POST", "PUT", "DELETE", "PATCH"
   ]
 }
 
+app.options("", cors(corsConfig));
 app.use(cors(corsConfig));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
